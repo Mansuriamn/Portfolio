@@ -180,3 +180,10 @@ if (navClose) {
     navMenu.classList.remove("show-sidebar");
   });
 }
+
+
+const resume=document.getElementById("resume");
+resume.addEventListener("click", () => {
+  window.open("Aman.pdf");
+});
+
