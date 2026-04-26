@@ -182,8 +182,8 @@ if (navClose) {
 }
 
 
-const resume=document.getElementById("resume");
+const resume = document.getElementById("resume");
 resume.addEventListener("click", () => {
-  window.open("Aman.pdf");
+  window.open("Aman_Mansuri_Resume.pdf");
 });
 
