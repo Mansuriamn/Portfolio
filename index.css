@@ -68,6 +68,7 @@ input {
 body {
   background-color: var(--body-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 h1,
 h2,
@@ -356,7 +357,7 @@ input {
   align-items: center;
 }
 .about-img {
-  width: 480px;
+  width: clamp(220px, 80%, 480px);
   border-radius: 0.75rem;
   justify-self: center;
 }
@@ -602,7 +603,9 @@ input {
 }
 .portfolio-popup-inner {
   background-color: var(--box-color);
-  width: 900px;
+  width: min(900px, 92vw);
+  max-height: 90vh;
+  overflow-y: auto;
   border-radius: 0.5rem;
   padding: 2.5rem;
   position: relative;
@@ -1029,8 +1032,9 @@ textarea.input {
     padding-right: 0;
   }
   .work-container {
-    grid-template-columns: repeat(2, 330px);
-    gap: 3rem;
+    grid-template-columns: repeat(2, minmax(0, 340px));
+    gap: 2rem;
+    justify-content: center;
   }
 }
 
@@ -1088,7 +1092,7 @@ textarea.input {
     row-gap: 2.5rem;
   }
   .about-img {
-    width: 350px;
+    width: clamp(220px, 60%, 380px);
   }
   .about-data {
     text-align: center;
@@ -1100,20 +1104,26 @@ textarea.input {
     padding: 0.75rem 0.5rem;
   }
   .about-description {
-    padding: 0 4rem;
+    padding: 0 2rem;
     text-align: center;
   }
 
   .qualification-container {
-    grid-template-columns: repeat(2, 290px);
+    grid-template-columns: repeat(2, minmax(0, 320px));
+    justify-content: center;
   }
   .skills-container {
-    grid-template-columns: 340px 300px;
+    grid-template-columns: minmax(0, 340px) minmax(0, 300px);
+    justify-content: center;
   }
   .skills-list {
     row-gap: 1.7rem;
   }
 
+  .work-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
   .work-card {
     padding: 1rem;
   }
@@ -1125,13 +1135,19 @@ textarea.input {
   }
 
   .services-container {
-    grid-template-columns: repeat(3, 220px);
+    grid-template-columns: repeat(3, minmax(0, 220px));
+    justify-content: center;
   }
 
   .testimonial-card {
     padding: 1.25rem 1.5rem;
   }
 
+  .portfolio-popup-inner {
+    width: min(90vw, 900px);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
   .portfolio-item-details {
     margin-bottom: var(--mb15);
   }
@@ -1143,20 +1159,35 @@ textarea.input {
   }
 }
 
+/* ── iPad portrait & large phones landscape (768px) ── */
 @media screen and (max-width: 768px) {
   .about-img {
-    width: 250px;
+    width: clamp(180px, 55vw, 300px);
   }
+  .about-description {
+    padding: 0 1rem;
+  }
+
   .qualification-container {
-    grid-template-columns: 290px;
+    grid-template-columns: minmax(0, 1fr);
     row-gap: 3rem;
   }
   .skills-container {
-    grid-template-columns: 300px;
+    grid-template-columns: minmax(0, 1fr);
     row-gap: 3rem;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
   }
+
   .work-container {
-    grid-template-columns: 330px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .work-filters {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
   }
 
   .services-container {
@@ -1171,9 +1202,13 @@ textarea.input {
   }
 
   .contact-container {
-    grid-template-columns: 360px;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
     row-gap: 3rem;
   }
+
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 3rem;
@@ -1192,31 +1227,43 @@ textarea.input {
     margin-top: var(--mb3);
   }
 
+  /* Popup – single column, scrollable, safe for short screens */
+  .portfolio-popup {
+    align-items: flex-start;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
   .portfolio-popup-inner {
-    width: 420px;
-    padding: 2.8rem 1.5rem 2.5rem;
+    width: min(92vw, 480px);
+    max-height: none;
+    padding: 2.5rem 1.25rem 2rem;
+    margin: auto;
   }
   .portfolio-popup-content {
     grid-template-columns: 1fr;
-    row-gap: 1.6rem;
+    row-gap: 1.25rem;
   }
   .details-title {
     font-size: var(--normal-font-size);
   }
   .portfolio-popup-close {
-    top: 0.5rem;
+    top: 0.75rem;
+    right: 0.75rem;
   }
 }
 
+/* ── Phone portrait (≤576px) ── */
 @media screen and (max-width: 576px) {
   .nav-toggle {
     right: initial;
     left: 1.5rem;
   }
+
+  /* iOS 100vh fix */
   .home {
     background-image: none;
+    min-height: 100svh;
     height: initial;
-    align-items: initial;
     padding: 7rem 0 2rem;
   }
   .home-container {
@@ -1224,8 +1271,11 @@ textarea.input {
   }
   .home-img {
     display: block;
-    width: 250px;
+    width: clamp(180px, 60vw, 260px);
     justify-self: center;
+  }
+  .home-description {
+    max-width: 100%;
   }
   .my-info {
     display: none;
@@ -1262,9 +1312,22 @@ textarea.input {
     padding: 0;
   }
 
-  .work-container,
+  .work-container {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .work-filters {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .work-item {
+    font-size: var(--small-font-size);
+    padding: 0.25rem 0.6rem;
+  }
+
   .contact-container {
-    grid-template-columns: 300px;
+    grid-template-columns: 1fr;
+    max-width: 100%;
   }
 
   .footer-container {
@@ -1273,15 +1336,30 @@ textarea.input {
   .footer-links {
     justify-self: flex-start;
   }
+
+  /* Popup slides up from bottom on phone (sheet style) */
+  .portfolio-popup {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .portfolio-popup-inner {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+    max-height: 92svh;
+    overflow-y: auto;
+    padding: 2.5rem 1.25rem 2rem;
+    margin: 0;
+  }
 }
 
-@media screen and (max-width: 350px) {
+/* ── Small phones (≤390px) ── */
+@media screen and (max-width: 390px) {
   .container {
     margin-left: var(--mb1);
-    margin-left: var(--mb1);
+    margin-right: var(--mb1);
   }
   .home-img {
-    width: 200px;
+    width: clamp(150px, 55vw, 200px);
   }
   .home-title {
     font-size: var(--h1-font-size);
@@ -1294,6 +1372,7 @@ textarea.input {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 0.5rem;
   }
+
   .work-container,
   .skills-container,
   .qualification-container,
@@ -1303,18 +1382,37 @@ textarea.input {
   .skills-title {
     font-size: var(--normal-font-size);
   }
-  .work-item {
-    font-size: var(--normal-font-size);
-  }
   .work-filters {
     column-gap: 0.25rem;
   }
   .services-container {
-    grid-template-columns: max-content;
+    grid-template-columns: 1fr;
   }
   .services-content {
-    padding-right: 3.5rem;
+    padding-right: 1.5rem;
   }
 }
 
-
+/* ── Touch / pointer polish ── */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover-only pseudo that gets stuck on tap */
+  .button::after {
+    display: none;
+  }
+  /* Increase tap target size for filter pills (min 44×44 WCAG) */
+  .work-item {
+    padding: 0.4rem 0.9rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  /* Bigger nav links for fat fingers */
+  .nav-link {
+    padding: 1.2rem 0;
+    font-size: 1.1rem;
+  }
+  /* Remove webkit tap highlight flash */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
